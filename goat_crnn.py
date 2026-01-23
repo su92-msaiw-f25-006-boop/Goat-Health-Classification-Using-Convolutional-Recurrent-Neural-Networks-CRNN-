@@ -1,5 +1,5 @@
-# Generated from: GOAT_CRNN (training).ipynb
-# Converted at: 2026-01-23T12:19:29.183Z
+# Generated from: GOAT_CRNN (train2).ipynb
+# Converted at: 2026-01-23T12:20:16.786Z
 # Next step (optional): refactor into modules & generate tests with RunCell
 # Quick start: pip install runcell
 
@@ -58,7 +58,7 @@ TEST_DIR  = os.path.join(BASE_DIR, "test")
 
 IMG_SIZE = (128, 128)
 BATCH_SIZE = 32
-EPOCHS = 20
+EPOCHS = 30
 LEARNING_RATE = 1e-4
 
 
@@ -95,11 +95,9 @@ print("Total Classes:", NUM_CLASSES)
 
 data_augmentation = tf.keras.Sequential([
     tf.keras.layers.Rescaling(1./255),
-    tf.keras.layers.RandomFlip("horizontal_and_vertical"),
-    tf.keras.layers.RandomRotation(0.2),
-    tf.keras.layers.RandomZoom(0.2),
-    tf.keras.layers.RandomContrast(0.2),
-    tf.keras.layers.RandomTranslation(0.1, 0.1)
+    tf.keras.layers.RandomFlip("horizontal"),
+    tf.keras.layers.RandomZoom(0.1),
+    tf.keras.layers.RandomContrast(0.1)
 ])
 
 train_ds = train_ds.map(lambda x, y: (data_augmentation(x), y))
@@ -113,8 +111,12 @@ test_ds  = test_ds.prefetch(tf.data.AUTOTUNE)
 
 inputs = Input(shape=(128, 128, 3))
 
-# CNN Feature Extraction
-x = Conv2D(32, 3, activation='relu', padding='same')(inputs)
+# LIGHTWEIGHT CNN (from scratch)
+x = Conv2D(16, 3, activation='relu', padding='same')(inputs)
+x = BatchNormalization()(x)
+x = MaxPooling2D(2)(x)
+
+x = Conv2D(32, 3, activation='relu', padding='same')(x)
 x = BatchNormalization()(x)
 x = MaxPooling2D(2)(x)
 
@@ -126,18 +128,14 @@ x = Conv2D(128, 3, activation='relu', padding='same')(x)
 x = BatchNormalization()(x)
 x = MaxPooling2D(2)(x)
 
-x = Conv2D(256, 3, activation='relu', padding='same')(x)
-x = BatchNormalization()(x)
-x = MaxPooling2D(2)(x)
+# Reshape CNN → sequence
+x = tf.keras.layers.Reshape((8, 128 * 8))(x)
 
-# Reshape CNN output → sequence
-x = tf.keras.layers.Reshape((8, 256 * 8))(x)
-
-# RNN Layer
-x = GRU(256, return_sequences=False)(x)
+# RNN (smaller, stable)
+x = GRU(128, return_sequences=False)(x)
 
 # Classification head
-x = Dense(256, activation='relu')(x)
+x = Dense(128, activation='relu')(x)
 x = Dropout(0.5)(x)
 outputs = Dense(NUM_CLASSES, activation='softmax')(x)
 
@@ -145,7 +143,7 @@ model = Model(inputs, outputs)
 
 model.compile(
     optimizer=Adam(learning_rate=LEARNING_RATE),
-    loss='categorical_crossentropy',
+    loss=tf.keras.losses.CategoricalCrossentropy(label_smoothing=0.1),
     metrics=['accuracy']
 )
 
@@ -154,7 +152,7 @@ model.summary()
 
 early_stop = EarlyStopping(
     monitor='val_accuracy',
-    patience=5,
+    patience=7,
     restore_best_weights=True
 )
 
@@ -195,7 +193,7 @@ for x, y in test_ds:
 
 cm = tf.math.confusion_matrix(y_true, y_pred)
 
-plt.figure(figsize=(10,8))
+plt.figure(figsize=(8,6))
 sns.heatmap(
     cm,
     xticklabels=class_names,
@@ -210,7 +208,6 @@ plt.title("Confusion Matrix")
 plt.show()
 
 
-MODEL_PATH = "/content/drive/MyDrive/Goat_CRNN_Model.keras"
 IMAGE_PATH = "/content/drive/MyDrive/test_image/goat_test1.jpg"
 
 model = tf.keras.models.load_model(MODEL_PATH)
