@@ -53,6 +53,7 @@ train_ds = image_dataset_from_directory(
     seed=42
 )
 
+# Load validation dataset
 val_ds = image_dataset_from_directory(
     VAL_DIR,
     image_size=IMG_SIZE,
