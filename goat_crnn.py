@@ -30,8 +30,10 @@ import warnings
 # Suppress warnings for cleaner output
 warnings.filterwarnings("ignore")
 
+# Dataset directory configuration
 BASE_DIR = "/content/drive/MyDrive/Goat_Splits"
 
+# Define dataset split directories
 TRAIN_DIR = os.path.join(BASE_DIR, "train")
 VAL_DIR   = os.path.join(BASE_DIR, "val")
 TEST_DIR  = os.path.join(BASE_DIR, "test")
