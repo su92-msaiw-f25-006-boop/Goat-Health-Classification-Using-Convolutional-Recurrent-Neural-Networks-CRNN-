@@ -182,6 +182,7 @@ print("Model saved successfully")
 test_loss, test_acc = model.evaluate(test_ds)
 print(f"Test Accuracy: {test_acc * 100:.2f}%")
 
+# Generate predictions for confusion matrix
 y_true, y_pred = [], []
 
 for x, y in test_ds:
