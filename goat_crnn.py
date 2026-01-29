@@ -158,6 +158,7 @@ checkpoint = ModelCheckpoint(
     save_best_only=True
 )
 
+# Configure learning rate reduction callback
 reduce_lr = ReduceLROnPlateau(
     monitor='val_loss',
     factor=0.5,
