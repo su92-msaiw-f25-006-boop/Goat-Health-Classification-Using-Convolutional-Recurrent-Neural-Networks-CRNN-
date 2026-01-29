@@ -79,6 +79,7 @@ NUM_CLASSES = len(class_names)
 print("Classes:", class_names)
 print("Number of Classes:", NUM_CLASSES)
 
+# Data augmentation pipeline for training set
 data_augmentation = tf.keras.Sequential([
     tf.keras.layers.Rescaling(1./255),
     tf.keras.layers.RandomFlip("horizontal"),
