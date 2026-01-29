@@ -93,6 +93,7 @@ train_ds = train_ds.map(lambda x, y: (data_augmentation(x), y))
 val_ds   = val_ds.map(lambda x, y: (x / 255.0, y))
 test_ds  = test_ds.map(lambda x, y: (x / 255.0, y))
 
+# Optimize data pipeline with prefetching
 train_ds = train_ds.prefetch(tf.data.AUTOTUNE)
 val_ds   = val_ds.prefetch(tf.data.AUTOTUNE)
 test_ds  = test_ds.prefetch(tf.data.AUTOTUNE)
