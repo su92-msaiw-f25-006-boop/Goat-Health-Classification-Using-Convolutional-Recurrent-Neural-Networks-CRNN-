@@ -141,8 +141,10 @@ model.compile(
     metrics=['accuracy']
 )
 
+# Display model architecture
 model.summary()
 
+# Configure early stopping callback
 early_stop = EarlyStopping(
     monitor='val_accuracy',
     patience=7,
