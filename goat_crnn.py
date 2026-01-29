@@ -151,6 +151,7 @@ early_stop = EarlyStopping(
     restore_best_weights=True
 )
 
+# Configure model checkpoint callback
 checkpoint = ModelCheckpoint(
     "best_goat_crnn_model.keras",
     monitor='val_accuracy',
