@@ -62,6 +62,7 @@ val_ds = image_dataset_from_directory(
     seed=42
 )
 
+# Load test dataset (no shuffling for consistent evaluation)
 test_ds = image_dataset_from_directory(
     TEST_DIR,
     image_size=IMG_SIZE,
