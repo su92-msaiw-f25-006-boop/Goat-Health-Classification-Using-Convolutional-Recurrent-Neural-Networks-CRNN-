@@ -127,6 +127,7 @@ x = Reshape((8, 8 * 128))(x)   # (timesteps, features)
 x = GRU(128, return_sequences=False)(x)
 
 # ----- CLASSIFIER -----
+# Dense layers with dropout for final classification
 x = Dense(128, activation='relu')(x)
 x = Dropout(0.5)(x)
 outputs = Dense(NUM_CLASSES, activation='softmax')(x)
