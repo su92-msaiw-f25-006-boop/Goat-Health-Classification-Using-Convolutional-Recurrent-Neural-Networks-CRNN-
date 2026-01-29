@@ -132,6 +132,7 @@ x = Dense(128, activation='relu')(x)
 x = Dropout(0.5)(x)
 outputs = Dense(NUM_CLASSES, activation='softmax')(x)
 
+# Create and compile the model
 model = Model(inputs, outputs)
 
 model.compile(
