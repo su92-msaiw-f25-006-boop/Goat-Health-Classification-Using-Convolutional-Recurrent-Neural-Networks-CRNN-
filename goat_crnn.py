@@ -26,6 +26,8 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+
+# Suppress warnings for cleaner output
 warnings.filterwarnings("ignore")
 
 BASE_DIR = "/content/drive/MyDrive/Goat_Splits"
