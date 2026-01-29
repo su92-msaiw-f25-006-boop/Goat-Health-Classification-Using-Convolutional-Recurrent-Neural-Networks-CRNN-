@@ -87,7 +87,9 @@ data_augmentation = tf.keras.Sequential([
     tf.keras.layers.RandomContrast(0.1)
 ])
 
+# Apply data augmentation to training set
 train_ds = train_ds.map(lambda x, y: (data_augmentation(x), y))
+# Normalize validation and test sets
 val_ds   = val_ds.map(lambda x, y: (x / 255.0, y))
 test_ds  = test_ds.map(lambda x, y: (x / 255.0, y))
 
