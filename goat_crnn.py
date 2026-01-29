@@ -38,6 +38,7 @@ TRAIN_DIR = os.path.join(BASE_DIR, "train")
 VAL_DIR   = os.path.join(BASE_DIR, "val")
 TEST_DIR  = os.path.join(BASE_DIR, "test")
 
+# Hyperparameters configuration
 IMG_SIZE = (128, 128)
 BATCH_SIZE = 32
 EPOCHS = 30
