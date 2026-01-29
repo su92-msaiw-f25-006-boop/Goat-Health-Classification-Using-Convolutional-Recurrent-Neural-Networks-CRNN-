@@ -190,6 +190,7 @@ for x, y in test_ds:
     y_true.extend(np.argmax(y.numpy(), axis=1))
     y_pred.extend(np.argmax(preds, axis=1))
 
+# Generate and visualize confusion matrix
 cm = tf.math.confusion_matrix(y_true, y_pred)
 
 plt.figure(figsize=(7,5))
