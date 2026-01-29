@@ -71,9 +71,11 @@ test_ds = image_dataset_from_directory(
     shuffle=False
 )
 
+# Extract class names and count
 class_names = train_ds.class_names
 NUM_CLASSES = len(class_names)
 
+# Display dataset information
 print("Classes:", class_names)
 print("Number of Classes:", NUM_CLASSES)
 
