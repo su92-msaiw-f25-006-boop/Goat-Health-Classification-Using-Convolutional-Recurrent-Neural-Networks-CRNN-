@@ -118,7 +118,8 @@ x = Conv2D(128, 3, activation='relu', padding='same')(x)
 x = BatchNormalization()(x)
 x = MaxPooling2D(2)(x)
 
-# ----- CNN → SEQUENCE -----
+# ----- CNN → SEQUENCE CONVERSION -----
+# Reshape feature maps to sequences for RNN processing
 x = Reshape((8, 8 * 128))(x)   # (timesteps, features)
 
 # ----- RNN -----
