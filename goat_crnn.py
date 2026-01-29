@@ -44,6 +44,7 @@ BATCH_SIZE = 32
 EPOCHS = 30
 LEARNING_RATE = 1e-4
 
+# Load training dataset
 train_ds = image_dataset_from_directory(
     TRAIN_DIR,
     image_size=IMG_SIZE,
