@@ -165,6 +165,7 @@ reduce_lr = ReduceLROnPlateau(
     patience=3
 )
 
+# Train the model with callbacks
 history = model.fit(
     train_ds,
     validation_data=val_ds,
