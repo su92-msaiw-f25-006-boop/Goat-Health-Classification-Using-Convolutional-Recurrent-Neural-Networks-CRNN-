@@ -173,9 +173,10 @@ history = model.fit(
     callbacks=[early_stop, checkpoint, reduce_lr]
 )
 
+# Save the trained model
 MODEL_PATH = "/content/drive/MyDrive/Goat_CRNN_Model.keras"
 model.save(MODEL_PATH)
-print("✅ Model saved successfully")
+print("Model saved successfully")
 
 test_loss, test_acc = model.evaluate(test_ds)
 print(f"🔥 Test Accuracy: {test_acc * 100:.2f}%")
