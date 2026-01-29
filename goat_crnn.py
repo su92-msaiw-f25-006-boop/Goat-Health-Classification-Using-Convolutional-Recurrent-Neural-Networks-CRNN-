@@ -207,8 +207,10 @@ plt.ylabel("Actual")
 plt.title("Confusion Matrix")
 plt.show()
 
+# Single image prediction
 IMAGE_PATH = "/content/drive/MyDrive/test_image/goat_test1.jpg"
 
+# Load the saved model
 model = tf.keras.models.load_model(MODEL_PATH)
 
 img = tf.keras.preprocessing.image.load_img(
