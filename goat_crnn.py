@@ -178,8 +178,9 @@ MODEL_PATH = "/content/drive/MyDrive/Goat_CRNN_Model.keras"
 model.save(MODEL_PATH)
 print("Model saved successfully")
 
+# Evaluate model on test set
 test_loss, test_acc = model.evaluate(test_ds)
-print(f"🔥 Test Accuracy: {test_acc * 100:.2f}%")
+print(f"Test Accuracy: {test_acc * 100:.2f}%")
 
 y_true, y_pred = [], []
 
