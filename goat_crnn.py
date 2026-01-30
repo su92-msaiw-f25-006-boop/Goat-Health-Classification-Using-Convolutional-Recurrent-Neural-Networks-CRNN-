@@ -208,18 +208,28 @@ plt.title("Confusion Matrix")
 plt.show()
 
 # Single image prediction
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+MODEL_PATH = "/content/drive/MyDrive/Goat_CRNN_Model.keras"
 IMAGE_PATH = "/content/drive/MyDrive/test_image/goat_test1.jpg"
+IMG_SIZE = (128, 128)
 
-# Load the saved model
+# Define class names (UPDATE if needed)
+class_names = ["Healthy", "Foot_Rot", "PPR"]
+
+# Load model
 model = tf.keras.models.load_model(MODEL_PATH)
+print("✅ Model loaded successfully")
 
-img = tf.keras.preprocessing.image.load_img(
-    IMAGE_PATH, target_size=IMG_SIZE
-)
-
+# Load image
+img = tf.keras.preprocessing.image.load_img(IMAGE_PATH, target_size=IMG_SIZE)
 img_arr = tf.keras.preprocessing.image.img_to_array(img) / 255.0
 img_arr = np.expand_dims(img_arr, axis=0)
 
+# Predict
 pred = model.predict(img_arr)
 idx = np.argmax(pred[0])
 
@@ -228,6 +238,7 @@ confidence = np.max(pred[0]) * 100
 
 status = "HEALTHY ✅" if "healthy" in predicted_class.lower() else "DISEASED ❌"
 
+# Display result
 plt.imshow(img)
 plt.axis("off")
 plt.title(f"{predicted_class}\n{status} ({confidence:.2f}%)")
